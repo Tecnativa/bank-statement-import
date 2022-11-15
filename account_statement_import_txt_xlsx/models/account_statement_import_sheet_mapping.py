@@ -70,6 +70,7 @@ class AccountStatementImportSheetMapping(models.Model):
     amount_column = fields.Char(
         help="Amount of transaction in journal's currency",
     )
+
     amount_debit_column = fields.Char(
         string="Debit amount column",
         help="Debit amount of transaction in journal's currency",
@@ -95,10 +96,35 @@ class AccountStatementImportSheetMapping(models.Model):
             "transaction amount in original transaction currency from"
         ),
     )
+    amount_type = fields.Selection(
+        selection=[
+            ("simple_value", "Simple value"),
+            ("absolute_value", "Absolute value"),
+            ("distinct_credit_debit", "Distinct Credit/debit Column"),
+        ],
+        string="Amount type",
+        required=True,
+        default="simple_value",
+        help=(
+            "Simple value: use igned amount in ammount comlumn\n"
+            "Absolute Value: use a same comlumn for debit and credit\n"
+            "(absolute value + indicate sign)\n"
+            "Distinct Credit/debit Column: use a distinct comlumn for debit and credit"
+        ),
+    )
+    amount_column = fields.Char(
+        string="Amount column",
+        help=(
+            'Used if amount type is "Simple value" or "Absolute value"\n'
+            "Amount of transaction in journal's currency\n"
+            "Some statement formats use credit/debit columns"
+        ),
+    )
     debit_credit_column = fields.Char(
         string="Debit/credit column",
         help=(
-            "Some statement formats use absolute amount value and indicate sign"
+            'Used if amount type is "Absolute value"\n'
+            "Some statement formats use absolute amount value and indicate sign\n"
             "of the transaction by specifying if it was a debit or a credit one"
         ),
     )
@@ -122,6 +148,18 @@ class AccountStatementImportSheetMapping(models.Model):
     )
     bank_account_column = fields.Char(
         help="Partner's bank account",
+    )
+    footer_lines_skip_count = fields.Integer(
+        string="Footer lines skip count",
+        help="Set the Footer lines number."
+        "Used in some csv/xlsx file that integrate meta data in"
+        "last lines.",
+        default="0",
+    )
+    header_lines_skip_count = fields.Integer(
+        string="Header lines skip count",
+        help="Set the Header lines number.",
+        default="0",
     )
 
     _sql_constraints = [

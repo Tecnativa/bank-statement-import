@@ -84,11 +84,12 @@ Contributors
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
 * Sebastien BEAU <sebastien.beau@akretion.com>
-* Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
+* Katherine Zaoral
 * Tecnativa (https://www.tecnativa.com)
 
   * Vicent Cubells
   * Victor M.M. Torres
+  * Víctor Martínez
 
 * ForgeFlow (https://www.forgeflow.com)
 
